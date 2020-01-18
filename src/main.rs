@@ -1,46 +1,31 @@
-use ggez::{graphics, Context, ContextBuilder, GameResult};
-use ggez::event::{self, EventHandler};
+use piston_window::*;
+use crate::constants::BACK_COLOR;
+
+mod constants;
+mod position;
+mod draw;
+mod life_cycle;
+mod size;
 
 fn main() {
-    // Make a Context.
-    let (mut ctx, mut event_loop) = ContextBuilder::new("tetris_game", "Tetris")
-        .build()
-        .expect("aieee, could not create ggez context!");
+    let mut window: PistonWindow =
+        WindowSettings::new("Tetris", [to_coord_u32(width), to_coord_u32(height)])
+            .exit_on_esc(true)
+            .build()
+            .unwrap();
 
-    // Create an instance of your event handler.
-    // Usually, you should provide it with the Context object to
-    // use when setting your game up.
-    let mut my_game = MyGame::new(&mut ctx);
-
-    // Run!
-    match event::run(&mut ctx, &mut event_loop, &mut my_game) {
-        Ok(_) => println!("Exited cleanly."),
-        Err(e) => println!("Error occured: {}", e)
-    }
-}
-
-struct MyGame {
-    // Your state here...
-}
-
-impl MyGame {
-    pub fn new(_ctx: &mut Context) -> MyGame {
-        // Load/create resources such as images here.
-        MyGame {
-            // ...
+    while let Some(event) = window.next() {
+        if let Some(Button::Keyboard(key)) = event.press_args() {
+            //todo key press handle
         }
-    }
-}
 
-impl EventHandler for MyGame {
-    fn update(&mut self, _ctx: &mut Context) -> GameResult<()> {
-        // Update code here...
-        Ok(())
-    }
+        window.draw_2d(&event, |context, g, _| {
+            clear(BACK_COLOR, g);
+            //todo
+        });
 
-    fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
-        graphics::clear(ctx, graphics::WHITE);
-        // Draw code here...
-        graphics::present(ctx)
+        event.update(|arg| {
+            //todo
+        });
     }
 }
