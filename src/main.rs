@@ -8,6 +8,8 @@ mod life_cycle;
 mod size;
 
 fn main() {
+    let (width, height) = (10, 20);
+
     let mut window: PistonWindow =
         WindowSettings::new("Tetris", [to_coord_u32(width), to_coord_u32(height)])
             .exit_on_esc(true)
